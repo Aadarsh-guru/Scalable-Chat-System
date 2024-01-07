@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String  @id @default(uuid())
+  fullName     String  @map("full_name")
+  username     String  @unique
+  email        String  @unique
+  password     String
+  profile      String?
+  about        String?
+  isVerified   Boolean @default(false)
+  refreshToken String? @map("refresh_token")
+
+  friends       Friend[]
+  conversations Conversation[]
+  messages      Message[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Friend {
+  id       String  @id @default(uuid())
+  fullName String  @map("full_name")
+  username String
+  email    String
+  profile  String?
+  about    String?
+  friendId String  @map("friend_id")
+  userId   String  @map("user_id")
+  user     User    @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("friends")
+}
+
+model Conversation {
+  id       String    @id @default(uuid())
+  users    User[]
+  messages Message[]
+
+  isGroup      Boolean @default(false) @map("is_group")
+  groupProfile String? @map("group_profile")
+  groupName    String? @map("group_name")
+  groupAbout   String? @map("group_about")
+  groupAdminId String? @map("group_admin_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("conversations")
+}
+
+enum MessageTypes {
+  TEXT
+  AUDIO
+  VIDEO
+  DOCUMENT
+  IMAGE
+}
+
+model Message {
+  id             String       @id
+  messageType    MessageTypes @default(TEXT) @map("message_type")
+  body           String
+  conversationId String       @map("conversation_id")
+  senderId       String       @map("sender_id")
+
+  Conversation Conversation @relation(fields: [conversationId], references: [id])
+  sender       User         @relation(fields: [senderId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("messages")
+}
