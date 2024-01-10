@@ -69,10 +69,6 @@ const initializeSocketIo = (io: Server) => {
                 io.emit(`event:typing-${conversationId}`, { conversationId, userId });
             });
 
-            socket.on('event:stop-typing', ({ conversationId, userId }: { conversationId: string, userId: string }) => {
-                io.emit(`event:stop-typing-${conversationId}`, { conversationId, userId });
-            });
-
             socket.on('disconnect', async () => {
                 await redisClient.del(`user:${userId}`);
                 io.emit(`event:${userId}-disconnected`, { isOnline: false });
