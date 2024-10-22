@@ -303,7 +303,6 @@ const sendOtpController = async (request: Request, response: Response) => {
         }
         const otp = generateOTP();
         const emailPayload = {
-            from: process.env.GMAIL_MAIL_USER_ID as string,
             to: email,
             subject: subject,
             html: otpTemplate(otp)

@@ -1,0 +1,27 @@
+{
+    "cli": {
+        "version": ">= 5.7.0"
+    },
+    "build": {
+        "development": {
+            "developmentClient": true,
+            "distribution": "internal"
+        },
+        "preview": {},
+        "production": {
+            "env": {
+                "EXPO_PUBLIC_API_URL": "",
+                "EXPO_PUBLIC_RESORCE_ACCESS_KEY": ""
+            },
+            "ios": {
+                "simulator": true
+            },
+            "android": {
+                "buildType": "apk"
+            }
+        }
+    },
+    "submit": {
+        "production": {}
+    }
+}

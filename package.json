@@ -1,10 +1,10 @@
 {
   "name": "scalable-chat-system",
   "version": "1.0.0",
-  "description": "A scalable chat system",
+  "description": "A Distributed chatting applicating built using nodejs, typescript, reactjs, react-native, redis, kafka, postgresql, prisma, aws services and socket.io",
   "main": "src/index.ts",
   "scripts": {
-    "start": "node dist/index.js",
+    "start": "npm run build && node dist/index.js",
     "build": "tsc",
     "dev": "nodemon --exec ts-node ./src/index.ts",
     "postinstall": "prisma generate"
@@ -17,6 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-s3": "^3.474.0",
+    "@aws-sdk/client-ses": "^3.675.0",
     "@aws-sdk/s3-request-presigner": "^3.474.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
@@ -26,7 +27,6 @@
     "ioredis": "^5.3.2",
     "jsonwebtoken": "^9.0.2",
     "kafkajs": "^2.2.4",
-    "nodemailer": "^6.9.8",
     "socket.io": "^4.7.2",
     "uuid": "^9.0.1"
   },
@@ -40,7 +40,6 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.10.0",
-    "@types/nodemailer": "^6.4.14",
     "@types/uuid": "^9.0.7",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",

@@ -1,19 +1,34 @@
-import transporter from "../config/nodemailer.config";
+import { SendEmailCommand } from "@aws-sdk/client-ses";
+import sesClient from "../config/ses.config";
 
 interface SendMailProps {
-    from: string;
     to: string;
     subject: string;
     html: string;
 };
 
-const sendMail = async ({ from, to, subject, html }: SendMailProps) => {
+const sendMail = async ({ to, subject, html }: SendMailProps) => {
     try {
-        const info = await transporter.sendMail({ from, to, subject, html });
+        const params = {
+            Destination: {
+                ToAddresses: [to],
+            },
+            Message: {
+                Body: {
+                    Html: {
+                        Data: html,
+                    },
+                },
+                Subject: { Data: subject },
+            },
+            Source: process.env.ADMIN_EMAIL_ADDRESS as string,
+        };
+        const command = new SendEmailCommand(params);
+        const info = await sesClient.send(command);
         return { success: true, info: info };
     } catch (error: any) {
         return { success: false, error: error?.message };
     }
-}
+};
 
 export default sendMail;
