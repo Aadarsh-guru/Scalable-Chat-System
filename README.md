@@ -45,13 +45,12 @@ A robust and scalable chat infrastructure using cutting-edge technologies. This 
 ### Backend Setup
 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/scalable-chat.git
-cd scalable-chat
+git clone https://github.com/Aadarsh-guru/Scalable-Chat-System.git
+cd Scalable-Chat-System
 ```
 
 2. Install dependencies
 ```bash
-cd backend
 npm install
 ```
 
